@@ -1,0 +1,1 @@
+Kirjaukset = new Mongo.Collection('kirjaukset');

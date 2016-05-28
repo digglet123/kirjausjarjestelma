@@ -1,0 +1,39 @@
+<head>
+  <title>ryapp</title>
+</head>
+
+<body>
+	<div class="container">
+		<header>
+			<h1>Tuotteiden Kirjaus</h1>
+			<form class="new-kirjaus">
+				<input id ="nm" class = "form-control typeahead" type="text" name="prodName" placeholder ="tuotteen nimi" data-source = "etsi" autocomplete="off" spellcheck="off" required="true" autofocus data-autocomplete="auto" data-select="select">
+
+				<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €" required="true"> 
+				<input class = "input" id = "dt" type="text" name="purchaseDate" required="true">
+				<input class = "add" id = "add" type="submit" value="lisää">
+			</form>
+		</header>
+		<table>
+			<tr>
+				<th>tuote</th>
+				<th>hinta</th>
+				<th>päivämäärä</th>
+				<th>poista merkintä</th>
+			</tr>
+		    {{#each kirjaukset}}
+	            {{> kirjaus}}
+	        {{/each}}
+		</table>
+    </div>
+  
+</body>
+
+<template name="kirjaus">
+	<tr>
+		<td>{{name}}</td>
+	    <td>{{price}} €</td>
+	    <td>{{date}}</td>
+	    <td><button class="delete">poista</button></td>
+	</tr>
+</template>

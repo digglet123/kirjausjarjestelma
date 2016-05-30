@@ -12,7 +12,18 @@ Meteor.methods({
 			date: date 
 		});
 	},
+
 	poistaKirjaus: function(id){
 		Kirjaukset.remove(id);
+	},
+	
+	kerroSumma: function () {
+		var total = 0;
+
+	    Kirjaukset.find().map(function(doc) {
+	    	total += Number(doc.price);
+	    });
+	    
+	    return total; 
 	}
 });

@@ -4,9 +4,11 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './main.html';
 
 Template.body.helpers({
+    //Returns all items in staging collection
     kirjaukset: function(){
         return Kirjaukset.find();
     },
+    //creates product name array for typeahead
     etsi: function() {
     	return Kirjaukset.find().fetch().map(function(it){ return it.name; });
   	},
@@ -18,6 +20,7 @@ Template.body.helpers({
   	}
 });
 
+//Options for datepicker element
 var dateDropperOptions = { 
 	animation: "dropdown",          
     format:"d-m-Y",
@@ -31,36 +34,62 @@ var dateDropperOptions = {
                   
   };
 
+//Render datepicker
 Template.body.rendered = function() {
   $("#dt").dateDropper(dateDropperOptions);
 }
-
-
+  
+//Add button events
 Template.body.events({
 	'submit .new-kirjaus': function(event){
 		var title = event.target.prodName.value;
 		var price = event.target.prodPrice.value;
 		var date = event.target.purchaseDate.value;
 
+    //Call database insert method on server side
 		Meteor.call("lisaaKirjaus", title, price, date);
 
-		event.target.prodName.value = "";
-		event.target.prodPrice.value = "";
+    //Update sum of prices after delay
+    Meteor.setTimeout(function() {
+    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    }, 500);
+
+    //Reset UI after adding product
 		event.target.prodName.focus();
+    $('.typeahead').typeahead('close');
+    event.target.prodName.value = "";
+    event.target.prodPrice.value = "";
 
 		return false;
 	}
 });
 
-
+//Delete button events
 Template.kirjaus.events({
 	'click .delete': function(){
+    //Call database delete method on server side
 		Meteor.call("poistaKirjaus", this._id);
+
+    //Update sum of prices after delay
+    Meteor.setTimeout(function() {
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    }, 500);
 	}
 });
 
+//Client startup 
 Meteor.startup(function(){
-		// initializes all typeahead instances
+		// Initializes all typeahead instances
 		Meteor.typeahead.inject();
 });
 
+//Helper function: returns sum of all prices in staging area
+function kerroSumma() {
+    var total = 0;
+
+    Kirjaukset.find().map(function(doc) {
+      total += Number(doc.price);
+    });
+      
+    return total; 
+}

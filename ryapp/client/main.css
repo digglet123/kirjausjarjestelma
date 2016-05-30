@@ -14,36 +14,65 @@ body {
   background: #333;
 }
 
-.container {
-  padding: 10px;
-  max-width: 900px;
-  margin: 0 auto;
-  min-height: 100%;
-  background: white;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.26);
-}
 
 header {
+  padding: 20px 15px 20px 15px;
+  position: relative;
+
+}
+
+footer {
   padding: 20px 15px 20px 15px;
   position: relative;
 }
 
 h1 {
-  font-size: 2em;
+  color: #33cc33;
+  font-size: 3m;
   margin: 0;
   margin-bottom: 10px;
   display: inline-block;
   margin-right: 1em;
 }
 
-.add {
-  font-weight: bold;
-  background:  #33cc33;
-  color: #FFF;
-  font-size: 1em;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;;
+table {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+th {
+  color:white;
+  background-color:  #33cc33;
+}
+
+tr:nth-child(even){
+  background-color: #fff;
+}
+
+tr:nth-child(odd){
+  background-color: #eee;
+}
+
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100%;
+  background: white;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
 .delete {
@@ -57,29 +86,15 @@ h1 {
   border-radius: 4px;;
 }
 
-table {
-	width: 100%;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th, td {
-	padding: 10px;
-	text-align: center;
-	border: 1px solid black;
-	border-collapse: collapse;
-}
-
-th {
-	background-color:  #33cc33;
-}
-
-tr:nth-child(even){
-	background-color: #fff;
-}
-
-tr:nth-child(odd){
-	background-color: #eee;
+.green_btn {
+  float: right;
+  font-weight: bold;
+  background:  #33cc33;
+  color: #FFF;
+  font-size: 1em;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 4px;;
 }
 
 .typeahead,
@@ -106,7 +121,7 @@ tr:nth-child(odd){
 }
 
 .typeahead:focus {
-  border: 2px solid #0097cf;
+  border: 2px solid #33cc33
 }
 
 .tt-query {
@@ -143,12 +158,12 @@ tr:nth-child(odd){
 .tt-suggestion:hover {
   cursor: pointer;
   color: #fff;
-  background-color: #0097cf;
+  background-color: #84e184;
 }
 
 .tt-suggestion.tt-cursor {
   color: #fff;
-  background-color: #0097cf;
+  background-color: #84e184;
 
 }
 
@@ -156,4 +171,6 @@ tr:nth-child(odd){
   margin: 0;
 }
 
-
+#sum{
+  color : #33cc33;
+}

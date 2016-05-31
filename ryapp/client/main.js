@@ -3,7 +3,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-Template.body.helpers({
+Template.KirjausLayout.helpers({
     //Returns all items in staging collection
     kirjaukset: function(){
         return Kirjaukset.find();
@@ -35,12 +35,12 @@ var dateDropperOptions = {
   };
 
 //Render datepicker
-Template.body.rendered = function() {
+Template.KirjausLayout.rendered = function() {
   $("#dt").dateDropper(dateDropperOptions);
 }
   
 //Add button events
-Template.body.events({
+Template.KirjausLayout.events({
 	'submit .new-kirjaus': function(event){
 		var title = event.target.prodName.value;
 		var price = event.target.prodPrice.value;

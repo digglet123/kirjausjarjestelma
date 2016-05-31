@@ -10,6 +10,13 @@ Template.KirjausLayout.helpers({
     }
 });
 
+Template.ArkistoLayout.helpers({
+    //Returns all items in staging collection
+    kirjaukset: function(){
+        return Kirjaukset.find();
+    }
+});
+
 Template.typeform.helpers({
   //creates product name array for typeahead
     etsi: function() {
@@ -90,6 +97,21 @@ Template.kirjaus.events({
 
 //Client startup 
 Meteor.startup(function(){
+    //Update sum of products 
+    Meteor.setTimeout(function() {
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    }, 500);
+});
+
+Template.KirjausLayout.onRendered(function(){
+    //Update sum of products 
+    Meteor.setTimeout(function() {
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    }, 500);
+    $("#nm").focus();
+});
+
+Template.ArkistoLayout.onRendered(function(){
     //Update sum of products 
     Meteor.setTimeout(function() {
       document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";

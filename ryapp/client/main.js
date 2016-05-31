@@ -81,6 +81,10 @@ Template.kirjaus.events({
 Meteor.startup(function(){
 		// Initializes all typeahead instances
 		Meteor.typeahead.inject();
+    //Update sum of products 
+    Meteor.setTimeout(function() {
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    }, 500);
 });
 
 //Helper function: returns sum of all prices in staging area

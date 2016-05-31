@@ -23,3 +23,5 @@ accounts-ui
 sergeyt:typeahead
 bjimdar:datedropper
 twbs:bootstrap
+kadira:flow-router
+kadira:blaze-layout

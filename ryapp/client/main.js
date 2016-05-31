@@ -7,17 +7,25 @@ Template.KirjausLayout.helpers({
     //Returns all items in staging collection
     kirjaukset: function(){
         return Kirjaukset.find();
-    },
-    //creates product name array for typeahead
+    }
+});
+
+Template.typeform.helpers({
+  //creates product name array for typeahead
     etsi: function() {
-    	return Kirjaukset.find().fetch().map(function(it){ return it.name; });
-  	},
-  	auto: function(event, suggestion){
-  		$("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
-  	},
-  	select: function(event, suggestion){
-  		$("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
-  	}
+      return Kirjaukset.find().fetch().map(function(it){ return it.name; });
+    },
+    auto: function(event, suggestion){
+      $("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
+    },
+    select: function(event, suggestion){
+      $("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
+    }
+  });
+
+//Enable typeahead when form is rendered
+Template.typeform.onRendered(function(){
+  Meteor.typeahead.inject();
 });
 
 //Options for datepicker element
@@ -57,7 +65,7 @@ Template.KirjausLayout.events({
     //Reset UI after adding product
 		event.target.prodName.focus();
     $('.typeahead').typeahead('close');
-    event.target.prodName.value = "";
+    $('.typeahead').typeahead('val', "");
     event.target.prodPrice.value = "";
 
 		return false;
@@ -74,13 +82,14 @@ Template.kirjaus.events({
     Meteor.setTimeout(function() {
       document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
     }, 500);
+
+    //Focus on form after delete button is pressed
+    $("#nm").focus();
 	}
 });
 
 //Client startup 
 Meteor.startup(function(){
-		// Initializes all typeahead instances
-		Meteor.typeahead.inject();
     //Update sum of products 
     Meteor.setTimeout(function() {
       document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";

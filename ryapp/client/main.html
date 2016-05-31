@@ -1,18 +1,19 @@
-<head>
-  <title>ryapp</title>
-</head>
-<body>
-	<div class="container">
-		{{> KirjausLayout}}
-    </div>
-</body>
+<template name="main">
+	<head>
+	  <title>ryapp</title>
+	</head>
+	<body>
+		<div class="container">
+			{{> Template.dynamic template=main}}
+	    </div>
+	</body>
+</template>
 
 <template name="KirjausLayout">
 	<header>
 		<h1>Tuotteiden Kirjaus</h1>
 		<form class="new-kirjaus">
-			<input id ="nm" class = "form-control typeahead" type="text" name="prodName" placeholder ="tuotteen nimi" data-source = "etsi" autocomplete="off" spellcheck="off" required="true" autofocus data-autocomplete="auto" data-select="select">
-
+			{{>typeform}}
 			<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €" required="true" autocomplete="off"> 
 			<input class = "input" id = "dt" type="text" name="purchaseDate" required="true">
 			<input class = "green_btn" id = "add" type="submit" value="lisää">
@@ -34,6 +35,10 @@
 		<label id = "sum">0.00 €</label>
 		<input class = "green_btn" id = "ins" type="submit" value="kirjaa tuotteet">
 	</footer>
+</template>
+
+<template name="typeform">
+	<input id = "nm" class = "form-control typeahead" type="text" name="prodName" placeholder ="tuotteen nimi" data-source = "etsi" autocomplete="off" spellcheck="off" required="true" autofocus data-autocomplete="auto" data-select="select">
 </template>
 
 

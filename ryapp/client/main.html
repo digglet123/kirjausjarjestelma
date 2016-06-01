@@ -35,23 +35,29 @@
 		{{/if}}
 	</header>
 	{{#if currentUser}}
-	<table>
-		<tr>
-			<th>tuote</th>
-			<th>hinta</th>
-			<th>päivämäärä</th>
-			<th>poista merkintä</th>
-		</tr>
-	    {{#each kirjaukset}}
-            {{> kirjaus}}
-        {{/each}}
-	</table>	
-	<footer>
-		<label id = "yht">Yhteensä:</label>
-		<label id = "sum"></label>
-		<button class = "green_btn" id = "ins" >kirjaa tuotteet</button>
-	</footer>
+		{{#if hasItems}}
+		<table>
+			<tr>
+				<th>tuote</th>
+				<th>hinta</th>
+				<th>päivämäärä</th>
+				<th>poista merkintä</th>
+			</tr>
+		    {{#each kirjaukset}}
+	            {{> kirjaus}}
+	        {{/each}}
+		</table>	
+		<footer>
+			<label id = "yht">Yhteensä:</label>
+			{{> KirjausSumma}}
+			<button class = "green_btn" id = "ins" >kirjaa tuotteet</button>
+		</footer>
+		{{/if}}
 	{{/if}}	
+</template>
+
+<template name="KirjausSumma">
+	<label id = "sum">0.00 €</label>
 </template>
 
 <template name="ArkistoLayout">

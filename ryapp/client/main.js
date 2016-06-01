@@ -3,10 +3,15 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
+Meteor.subscribe("arkisto");
+
 Template.KirjausLayout.helpers({
     //Returns all items in staging collection
     kirjaukset: function(){
         return Kirjaukset.find();
+    },
+    hasItems: function(){
+       return stagingCount() > 0;  
     }
 });
 
@@ -69,10 +74,9 @@ Template.KirjausLayout.events({
       date: date 
     });
 
-    //Update sum of prices after delay
-    Meteor.setTimeout(function() {
-    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
-    }, 500);
+    if(stagingCount() > 1){
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";  
+    }
 
     //Reset UI after adding product
 		event.target.prodName.focus();
@@ -86,6 +90,7 @@ Template.KirjausLayout.events({
   'click #ins': function(event){
     Kirjaukset.find().forEach(function(d){Meteor.call("lisaaArkistoon",d)});
     Kirjaukset.remove({});
+    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
     $("#nm").focus();
   }
 });
@@ -96,27 +101,22 @@ Template.kirjaus.events({
     //Call database delete method on server side
 		Kirjaukset.remove(this._id);
 
-    //Update sum of prices after delay
-    Meteor.setTimeout(function() {
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
-    }, 500);
+    //Update sum of prices 
+    if(stagingCount() > 1){
+      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";  
+    }
 
     //Focus on form after delete button is pressed
     $("#nm").focus();
 	}
 });
 
-Template.KirjausLayout.onRendered(function(){
+Template.KirjausSumma.onRendered(function(){
     //Update sum of products 
-    Meteor.setTimeout(function() {
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
-    }, 500);
+    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
     $("#nm").focus();
 });
 
-Template.ArkistoLayout.onRendered(function(){
-
-});
 
 //Helper function: returns sum of all prices in staging area
 function kerroSumma() {
@@ -128,7 +128,12 @@ function kerroSumma() {
       
     return total; 
 }
+//Helper function to determine number of items in staging area
+function stagingCount(){
+  return Kirjaukset.find().count();
+}
 
+//Configure AccountsUI
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });

@@ -14,3 +14,7 @@ Meteor.methods({
 	},
 	
 });
+
+Meteor.publish("arkisto", function(){
+	return Arkisto.find();
+});

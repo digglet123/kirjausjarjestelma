@@ -12,8 +12,8 @@ Template.KirjausLayout.helpers({
 
 Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
-    kirjaukset: function(){
-        return Kirjaukset.find();
+    arkistot: function(){
+        return Arkisto.find();
     }
 });
 
@@ -28,7 +28,7 @@ Template.typeform.helpers({
     select: function(event, suggestion){
       $("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
     }
-  });
+});
 
 //Enable typeahead when form is rendered
 Template.typeform.onRendered(function(){
@@ -47,22 +47,27 @@ var dateDropperOptions = {
     + "-" + new Date().toISOString().substring(5,8) 
     + new Date().toISOString().substring(0,4)
                   
-  };
+};
 
 //Render datepicker
-Template.KirjausLayout.rendered = function() {
+Template.DatePicker.rendered = function() {
   $("#dt").dateDropper(dateDropperOptions);
 }
   
-//Add button events
+//KirjausLayout Events
 Template.KirjausLayout.events({
+  //Actions when form is submitted
 	'submit .new-kirjaus': function(event){
 		var title = event.target.prodName.value;
 		var price = event.target.prodPrice.value;
 		var date = event.target.purchaseDate.value;
 
     //Call database insert method on server side
-		Meteor.call("lisaaKirjaus", title, price, date);
+		Kirjaukset.insert({
+      name : title,
+      price : price,
+      date: date 
+    });
 
     //Update sum of prices after delay
     Meteor.setTimeout(function() {
@@ -76,14 +81,20 @@ Template.KirjausLayout.events({
     event.target.prodPrice.value = "";
 
 		return false;
-	}
+	},
+  //Actions when submit products button is pressed
+  'click #ins': function(event){
+    Kirjaukset.find().forEach(function(d){Meteor.call("lisaaArkistoon",d)});
+    Kirjaukset.remove({});
+    $("#nm").focus();
+  }
 });
 
 //Delete button events
 Template.kirjaus.events({
 	'click .delete': function(){
     //Call database delete method on server side
-		Meteor.call("poistaKirjaus", this._id);
+		Kirjaukset.remove(this._id);
 
     //Update sum of prices after delay
     Meteor.setTimeout(function() {
@@ -95,14 +106,6 @@ Template.kirjaus.events({
 	}
 });
 
-//Client startup 
-Meteor.startup(function(){
-    //Update sum of products 
-    Meteor.setTimeout(function() {
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
-    }, 500);
-});
-
 Template.KirjausLayout.onRendered(function(){
     //Update sum of products 
     Meteor.setTimeout(function() {
@@ -112,10 +115,7 @@ Template.KirjausLayout.onRendered(function(){
 });
 
 Template.ArkistoLayout.onRendered(function(){
-    //Update sum of products 
-    Meteor.setTimeout(function() {
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
-    }, 500);
+
 });
 
 //Helper function: returns sum of all prices in staging area
@@ -128,3 +128,12 @@ function kerroSumma() {
       
     return total; 
 }
+
+Accounts.ui.config({
+  passwordSignupFields: "USERNAME_ONLY"
+});
+
+//Client startup 
+Meteor.startup(function(){
+
+});

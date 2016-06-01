@@ -25,13 +25,16 @@
 <template name="KirjausLayout">
 	<header>
 		<h1>Tuotteiden Kirjaus</h1>
+		{{#if currentUser}}
 		<form class="new-kirjaus">
 			{{>typeform}}
 			<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €" required="true" autocomplete="off"> 
-			<input class = "input" id = "dt" type="text" name="purchaseDate" required="true">
+			{{> DatePicker}}
 			<input class = "green_btn" id = "add" type="submit" value="lisää">
 		</form>
+		{{/if}}
 	</header>
+	{{#if currentUser}}
 	<table>
 		<tr>
 			<th>tuote</th>
@@ -46,8 +49,9 @@
 	<footer>
 		<label id = "yht">Yhteensä:</label>
 		<label id = "sum"></label>
-		<input class = "green_btn" id = "ins" type="submit" value="kirjaa tuotteet">
+		<button class = "green_btn" id = "ins" >kirjaa tuotteet</button>
 	</footer>
+	{{/if}}	
 </template>
 
 <template name="ArkistoLayout">
@@ -61,14 +65,14 @@
 			<th>päivämäärä</th>
 			<th>poista merkintä</th>
 		</tr>
-	    {{#each kirjaukset}}
+	    {{#each arkistot}}
             {{> kirjaus}}
         {{/each}}
 	</table>
-	<footer>
-		<label id = "yht">Yhteensä:</label>
-		<label id = "sum"></label>
-	</footer>
+</template>
+
+<template name="DatePicker">
+	<input class = "input" id = "dt" type="text" name="purchaseDate" required="true">
 </template>
 
 <template name="typeform">

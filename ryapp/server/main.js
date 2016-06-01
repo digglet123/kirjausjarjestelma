@@ -5,25 +5,12 @@ Meteor.startup(() => {
 });
 
 Meteor.methods({
-	lisaaKirjaus: function(title, price, date){
-		Kirjaukset.insert({
-			name : title,
-			price : price,
-			date: date 
-		});
+	lisaaArkistoon: function(lisattava){
+		Arkisto.insert(lisattava);
 	},
 
 	poistaKirjaus: function(id){
-		Kirjaukset.remove(id);
+		Arkisto.remove(id);
 	},
 	
-	kerroSumma: function () {
-		var total = 0;
-
-	    Kirjaukset.find().map(function(doc) {
-	    	total += Number(doc.price);
-	    });
-	    
-	    return total; 
-	}
 });

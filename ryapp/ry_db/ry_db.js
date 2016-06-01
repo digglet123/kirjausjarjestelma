@@ -1,1 +1,2 @@
-Kirjaukset = new Mongo.Collection('kirjaukset');
+Kirjaukset = new Mongo.Collection(null);
+Arkisto	= new Mongo.Collection('arkisto');

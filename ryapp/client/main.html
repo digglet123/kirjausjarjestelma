@@ -69,10 +69,10 @@
 			<th>tuote</th>
 			<th>hinta</th>
 			<th>päivämäärä</th>
-			<th>poista merkintä</th>
+			<th>kirjaaja</th>
 		</tr>
 	    {{#each arkistot}}
-            {{> kirjaus}}
+            {{> arkisto}}
         {{/each}}
 	</table>
 </template>
@@ -92,5 +92,14 @@
 	    <td>{{price}} €</td>
 	    <td>{{date}}</td>
 	    <td><button class="delete">poista</button></td>
+	</tr>
+</template>
+
+<template name="arkisto">
+	<tr>
+		<td>{{name}}</td>
+	    <td>{{price}} €</td>
+	    <td>{{date}}</td>
+	    <td>{{Owner.username}}</td>
 	</tr>
 </template>

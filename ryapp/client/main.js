@@ -71,7 +71,9 @@ Template.KirjausLayout.events({
 		Kirjaukset.insert({
       name : title,
       price : price,
-      date: date 
+      date: date, 
+      markDate : new Date(),
+      Owner : Meteor.user()
     });
 
     if(stagingCount() > 1){

@@ -67,9 +67,10 @@ Template.KirjausLayout.events({
 		var price = event.target.prodPrice.value;
 		var date = event.target.purchaseDate.value;
 
-    //Call database insert method on server side
+    //Add new product to clien side collection
 		Kirjaukset.insert({
       name : title,
+      unitPrice : price,
       price : price,
       amount : 1,
       date: date, 
@@ -98,17 +99,23 @@ Template.KirjausLayout.events({
   }
 });
 
-//Delete button events
+//Amount spinner events
 Template.kirjaus.events({
 	'click .input': function(){
-
+    //Delete item from staging area if amount is set to 0
     if(event.target.value == 0){
-      //Call database delete method on server side
       Kirjaukset.remove(this._id);
     }
-
+    else{
+      Kirjaukset.update(this._id, {
+        $set: { amount: event.target.value },
+      });
+      Kirjaukset.update(this._id, {
+        $set: { price: this.unitPrice * event.target.value },
+      });
+    }
     //Update sum of prices 
-    if(stagingCount() > 1){
+    if(stagingCount() > 0){
       document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";  
     }
 

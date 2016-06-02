@@ -68,6 +68,7 @@
 		<tr>
 			<th>tuote</th>
 			<th>hinta</th>
+			<th>kpl</th>
 			<th>päivämäärä</th>
 			<th>kirjaaja</th>
 		</tr>
@@ -91,7 +92,8 @@
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td>{{date}}</td>
-	    <td><input class = "input" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9"></td>
+	    <td><input class = "input" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on"
+ 		onselectstart="return false;"></td>
 	</tr>
 </template>
 
@@ -99,6 +101,7 @@
 	<tr>
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
+	    <td>{{amount}}</td>
 	    <td>{{date}}</td>
 	    <td>{{Owner.username}}</td>
 	</tr>

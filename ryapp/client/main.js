@@ -64,7 +64,7 @@ Template.KirjausLayout.events({
   //Actions when form is submitted
 	'submit .new-kirjaus': function(event){
 		var title = event.target.prodName.value;
-		var price = event.target.prodPrice.value;
+		var price = Number(event.target.prodPrice.value).toFixed(2);
 		var date = event.target.purchaseDate.value;
 
     //Add new product to clien side collection
@@ -111,7 +111,7 @@ Template.kirjaus.events({
         $set: { amount: event.target.value },
       });
       Kirjaukset.update(this._id, {
-        $set: { price: this.unitPrice * event.target.value },
+        $set: { price: (this.unitPrice * event.target.value).toFixed(2) },
       });
     }
     //Update sum of prices 

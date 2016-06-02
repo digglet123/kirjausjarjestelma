@@ -71,6 +71,7 @@ Template.KirjausLayout.events({
 		Kirjaukset.insert({
       name : title,
       price : price,
+      amount : 1,
       date: date, 
       markDate : new Date(),
       Owner : Meteor.user()
@@ -99,9 +100,12 @@ Template.KirjausLayout.events({
 
 //Delete button events
 Template.kirjaus.events({
-	'click .delete': function(){
-    //Call database delete method on server side
-		Kirjaukset.remove(this._id);
+	'click .input': function(){
+
+    if(event.target.value == 0){
+      //Call database delete method on server side
+      Kirjaukset.remove(this._id);
+    }
 
     //Update sum of prices 
     if(stagingCount() > 1){

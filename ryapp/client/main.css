@@ -120,6 +120,14 @@ tr:nth-child(odd){
   outline: none;
 }
 
+#amnt {
+  color : #33cc33;
+  font-size: 20px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+}
+
 .input{
   padding-top: 4px;
   padding-bottom: 4px;

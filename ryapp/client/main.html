@@ -28,7 +28,7 @@
 		{{#if currentUser}}
 		<form class="new-kirjaus">
 			{{>typeform}}
-			<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €" required="true" autocomplete="off"> 
+			<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €/kpl" required="true" autocomplete="off"> 
 			{{> DatePicker}}
 			<input class = "green_btn" id = "add" type="submit" value="lisää">
 		</form>
@@ -41,7 +41,7 @@
 				<th>tuote</th>
 				<th>hinta</th>
 				<th>päivämäärä</th>
-				<th>poista merkintä</th>
+				<th>kpl</th>
 			</tr>
 		    {{#each kirjaukset}}
 	            {{> kirjaus}}
@@ -91,7 +91,7 @@
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td>{{date}}</td>
-	    <td><button class="delete">poista</button></td>
+	    <td><input class = "input" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9"></td>
 	</tr>
 </template>
 

@@ -18,3 +18,7 @@ Meteor.methods({
 Meteor.publish("arkisto", function(){
 	return Arkisto.find();
 });
+
+Meteor.publish("tuotteet", function(){
+	return Tuotteet.find();
+});

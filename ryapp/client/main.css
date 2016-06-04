@@ -21,7 +21,7 @@ header {
 
 }
 
-footer {
+footer, .message {
   padding: 20px 15px 20px 15px;
   position: relative;
 }

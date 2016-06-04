@@ -4,6 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './main.html';
 
 Meteor.subscribe("arkisto");
+Meteor.subscribe("tuotteet");
 
 Template.KirjausLayout.helpers({
     //Returns all items in staging collection
@@ -25,13 +26,13 @@ Template.ArkistoLayout.helpers({
 Template.typeform.helpers({
   //creates product name array for typeahead
     etsi: function() {
-      return Kirjaukset.find().fetch().map(function(it){ return it.name; });
+      return Tuotteet.find().fetch().map(function(it){ return it.name; });
     },
     auto: function(event, suggestion){
-      $("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
+      $("#pr").val(Tuotteet.find({name: suggestion.value}).fetch()[0].unitPrice);
     },
     select: function(event, suggestion){
-      $("#pr").val(Kirjaukset.find({name: suggestion.value}).fetch().reverse()[0].price);
+      $("#pr").val(Tuotteet.find({name: suggestion.value}).fetch()[0].unitPrice);
     }
 });
 
@@ -70,8 +71,8 @@ Template.KirjausLayout.events({
     //Add new product to clien side collection
 		Kirjaukset.insert({
       name : title,
-      unitPrice : price,
-      price : price,
+      unitPrice : Number(price),
+      price : Number(price),
       amount : 1,
       date: date, 
       markDate : new Date(),

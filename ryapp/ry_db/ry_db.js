@@ -5,5 +5,8 @@ Tuotteet = new Mongo.Collection('tuotteet');
 Arkisto.allow({
 	insert: function(userId, doc){
 		return !!userId;
+	},
+	remove: function(userId, doc){
+		return doc.Owner._id === userId;
 	}
 });

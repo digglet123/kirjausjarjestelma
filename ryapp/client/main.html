@@ -24,7 +24,7 @@
 
 <template name="KirjausLayout">
 	<header>
-		<h1>Tuotteiden Kirjaus</h1>
+		<h1>Tuotteiden kirjaus</h1>
 		{{#if currentUser}}
 		<form class="new-kirjaus">
 			{{>typeform}}
@@ -73,6 +73,7 @@
 			<th>kpl</th>
 			<th>päivämäärä</th>
 			<th>kirjaaja</th>
+			<th>poista</th>
 		</tr>
 	    {{#each arkistot}}
             {{> arkisto}}
@@ -94,7 +95,7 @@
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td>{{date}}</td>
-	    <td><input class = "input" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on"
+	    <td><input class = "stepper" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on"
  		onselectstart="return false;"></td>
 	</tr>
 </template>
@@ -106,5 +107,6 @@
 	    <td>{{amount}}</td>
 	    <td>{{date}}</td>
 	    <td>{{Owner.username}}</td>
+	    <td>{{#if isOwner}}<button class = "delete">poista</button>{{/if}}</td>
 	</tr>
 </template>

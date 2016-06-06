@@ -6,7 +6,7 @@ import './main.html';
 Meteor.subscribe("arkisto");
 Meteor.subscribe("tuotteet");
 
-Template.KirjausLayout.helpers({
+Template.KirjausLayout.helpers({    
     //Returns all items in staging collection
     kirjaukset: function(){
         return Kirjaukset.find();
@@ -94,15 +94,33 @@ Template.KirjausLayout.events({
   //Actions when submit products button is pressed
   'click #ins': function(event){
     Kirjaukset.find().forEach(function(d){Meteor.call("lisaaArkistoon",d)});
+    alert("Tuotteet kirjattu arkistoon!");
     Kirjaukset.remove({});
     document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
     $("#nm").focus();
   }
 });
 
+Template.arkisto.events({
+'click .delete': function(){
+  if(this.Owner._id === Meteor.userId()){
+     Meteor.call("poistaKirjaus", this._id);
+  }
+  else{
+    alert("Ei oikeuksia!");
+  }
+}
+});
+
+Template.arkisto.helpers({
+  isOwner: function(){
+    return this.Owner._id === Meteor.userId();
+  }
+});
+
 //Amount spinner events
 Template.kirjaus.events({
-	'click .input': function(){
+	'click .stepper': function(){
     //Delete item from staging area if amount is set to 0
     if(event.target.value == 0){
       Kirjaukset.remove(this._id);

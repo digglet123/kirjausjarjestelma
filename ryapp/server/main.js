@@ -21,4 +21,4 @@ Meteor.publish("arkisto", function(){
 
 Meteor.publish("tuotteet", function(){
 	return Tuotteet.find();
-});
+});	

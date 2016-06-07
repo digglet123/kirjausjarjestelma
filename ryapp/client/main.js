@@ -19,7 +19,21 @@ Template.KirjausLayout.helpers({
 Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
     arkistot: function(){
-        return Arkisto.find();
+        return Arkisto.find({}, {sort: {'markDate': -1}});
+    },
+    kirjaajat: function(){
+      var myArray = Arkisto.find().fetch();
+      var distinctArray = _.uniq(myArray, false, function(d) {return d.Owner.username});
+      return _.pluck(distinctArray, 'Owner');
+    },
+    kirjaajaSumma: function(user){
+      return kerroHenkiloSumma(user).toFixed(2);
+    },
+    kokonaisSumma: function(){
+      return kerroSumma(Arkisto).toFixed(2);
+    },
+    viimeinenKirjaus: function(user){
+      return dateConvertEuro(Arkisto.find({Owner: user}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
     }
 });
 
@@ -29,9 +43,6 @@ Template.typeform.helpers({
       return Tuotteet.find().fetch().map(function(it){ return it.name; });
     },
     auto: function(event, suggestion){
-      $("#pr").val(Tuotteet.find({name: suggestion.value}).fetch()[0].unitPrice);
-    },
-    select: function(event, suggestion){
       $("#pr").val(Tuotteet.find({name: suggestion.value}).fetch()[0].unitPrice);
     }
 });
@@ -74,13 +85,13 @@ Template.KirjausLayout.events({
       unitPrice : Number(price),
       price : Number(price),
       amount : 1,
-      date: date, 
+      date: dateConvertIso(date), 
       markDate : new Date(),
       Owner : Meteor.user()
     });
 
     if(stagingCount() > 1){
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";  
+      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
     }
 
     //Reset UI after adding product
@@ -96,13 +107,13 @@ Template.KirjausLayout.events({
     Kirjaukset.find().forEach(function(d){Meteor.call("lisaaArkistoon",d)});
     alert("Tuotteet kirjattu arkistoon!");
     Kirjaukset.remove({});
-    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     $("#nm").focus();
   }
 });
 
 Template.arkisto.events({
-'click .delete': function(){
+'click #delete': function(){
   if(this.Owner._id === Meteor.userId()){
      Meteor.call("poistaKirjaus", this._id);
   }
@@ -115,7 +126,10 @@ Template.arkisto.events({
 Template.arkisto.helpers({
   isOwner: function(){
     return this.Owner._id === Meteor.userId();
-  }
+  },
+  prettyDate: function(isoDate){
+    return dateConvertEuro(isoDate);
+  } 
 });
 
 //Amount spinner events
@@ -135,7 +149,7 @@ Template.kirjaus.events({
     }
     //Update sum of prices 
     if(stagingCount() > 0){
-      document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";  
+      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
     }
 
     //Focus on form after delete button is pressed
@@ -143,32 +157,60 @@ Template.kirjaus.events({
 	}
 });
 
+Template.kirjaus.helpers({
+  prettyDate: function(isoDate){
+    return dateConvertEuro(isoDate);
+  }
+});
+
 Template.KirjausSumma.onRendered(function(){
     //Update sum of products 
-    document.getElementById('sum').innerHTML = kerroSumma().toFixed(2) + " €";
+    document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     $("#nm").focus();
 });
 
 
 //Helper function: returns sum of all prices in staging area
-function kerroSumma() {
+function kerroSumma(taulu) {
     var total = 0;
 
-    Kirjaukset.find().map(function(doc) {
+    taulu.find().map(function(doc) {
       total += Number(doc.price);
     });
       
     return total; 
 }
+
+function kerroHenkiloSumma(user){
+    var total = 0;
+
+    Arkisto.find({Owner: user}).map(function(doc) {
+      total += Number(doc.price);
+    });
+      
+    return total; 
+}
+
 //Helper function to determine number of items in staging area
 function stagingCount(){
   return Kirjaukset.find().count();
+}
+
+//Helper for converting date strings from euro to iso
+function dateConvertIso(dateString){
+  return dateString.replace( /(\d{2})-(\d{2})-(\d{4})/, "$3-$2-$1");
+}
+
+//Helper for converting date strings from iso to euro
+function dateConvertEuro(dateString){
+  return dateString.replace( /(\d{4})-(\d{2})-(\d{2})/, "$3-$2-$1");
 }
 
 //Configure AccountsUI
 Accounts.ui.config({
   passwordSignupFields: "USERNAME_ONLY"
 });
+
 
 //Client startup 
 Meteor.startup(function(){

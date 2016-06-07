@@ -35,7 +35,7 @@ h1 {
   margin-right: 1em;
 }
 
-table {
+.mainTable {
   width: 100%;
   border: 1px solid black;
   border-collapse: collapse;
@@ -48,9 +48,15 @@ table {
 
 }
 
+.secondaryTable{
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+}
+
 th, td {
   padding: 10px;
-  text-align: center;
   border: 1px solid black;
   border-collapse: collapse;
 }
@@ -93,8 +99,9 @@ tr:nth-child(odd){
   margin-right: 50px;
 }
 
-.delete {
-  float: center;
+#delete {
+  float: right;
+  margin-right: 30px;
   font-weight: bold;
   background: #DE4F4F;
   color: #FFF;
@@ -204,6 +211,10 @@ tr:nth-child(odd){
   margin: 0;
 }
 
-#sum{
+.total{
   color : #33cc33;
+}
+
+#name{
+  float: center;
 }

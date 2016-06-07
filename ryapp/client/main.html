@@ -10,6 +10,7 @@
 	</body>
 </template>
 
+
 <template name="navigation">
 	<nav class = "top-nav">
 		<ul>
@@ -21,6 +22,7 @@
 		</ul>
 	</nav>
 </template>
+
 
 <template name="KirjausLayout">
 	<header>
@@ -36,7 +38,7 @@
 	</header>
 	{{#if currentUser}}
 		{{#if hasItems}}
-		<table>
+		<table class="mainTable">
 			<tr>
 				<th>tuote</th>
 				<th>hinta</th>
@@ -58,22 +60,42 @@
 	{{/if}}	
 </template>
 
+
 <template name="KirjausSumma">
-	<label id = "sum">0.00 €</label>
+	<label class = "total" id = "sum">0.00 €</label>
 </template>
+
 
 <template name="ArkistoLayout">
 	<header>
 		<h1>Arkisto</h1>
 	</header>
-	<table>
+	<table class="secondaryTable">
+		<tr>
+			<th>kirjaaja</th>		
+			<th>summa</th>
+			<th>viimeisin kirjaus</th>
+		</tr>
+		{{#each kirjaajat}}
+			<tr>
+				<td><label>{{username}}</label></td>				
+				<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
+				<td>{{viimeinenKirjaus this}}</td>	
+			</tr>
+		{{/each}}
+		<tr>
+			<td><label>yhteensä</label></td>
+			<td><label class="total">{{kokonaisSumma}} €</label></td>
+			<td></td>
+		</tr>
+	</table>
+	<table class="mainTable">
 		<tr>
 			<th>tuote</th>
 			<th>hinta</th>
 			<th>kpl</th>
 			<th>päivämäärä</th>
 			<th>kirjaaja</th>
-			<th>poista</th>
 		</tr>
 	    {{#each arkistot}}
             {{> arkisto}}
@@ -81,12 +103,14 @@
 	</table>
 </template>
 
+
 <template name="DatePicker">
 	<input class = "input" id = "dt" type="text" name="purchaseDate" required="true">
 </template>
 
+
 <template name="typeform">
-	<input id = "nm" class = "form-control typeahead" type="text" name="prodName" placeholder ="tuotteen nimi" data-source = "etsi" autocomplete="off" spellcheck="off" required="true" autofocus data-autocomplete="auto" data-select="select">
+	<input id = "nm" class = "form-control typeahead" type="text" name="prodName" placeholder ="tuotteen nimi" data-source = "etsi" autocomplete="off" spellcheck="off" required="true" autofocus data-autocomplete="auto" data-select="auto">
 </template>
 
 
@@ -94,19 +118,19 @@
 	<tr>
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
-	    <td>{{date}}</td>
+	    <td>{{prettyDate date}} </td>
 	    <td><input class = "stepper" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on"
  		onselectstart="return false;"></td>
 	</tr>
 </template>
+
 
 <template name="arkisto">
 	<tr>
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td>{{amount}}</td>
-	    <td>{{date}}</td>
-	    <td>{{Owner.username}}</td>
-	    <td>{{#if isOwner}}<button class = "delete">poista</button>{{/if}}</td>
+	    <td>{{prettyDate date}}</td>
+	    <td><label id = "name">{{Owner.username}}</label>{{#if isOwner}}<button id = "delete">poista</button>{{/if}}</td>
 	</tr>
 </template>

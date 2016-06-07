@@ -84,9 +84,9 @@
 			</tr>
 		{{/each}}
 		<tr>
-			<td><label>yhteensä</label></td>
+			<td><label>yhteenveto</label></td>
 			<td><label class="total">{{kokonaisSumma}} €</label></td>
-			<td></td>
+			<td>{{viimeisinKirjaus}}</td>
 		</tr>
 	</table>
 	<table class="mainTable">
@@ -101,6 +101,12 @@
             {{> arkisto}}
         {{/each}}
 	</table>
+	{{>lataus}}
+</template>
+
+
+<template name="lataus">
+	<a href="#" class="btn btn-default" role="button" id="download">Lataa CSV</a>
 </template>
 
 

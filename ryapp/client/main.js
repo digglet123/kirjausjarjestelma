@@ -34,6 +34,9 @@ Template.ArkistoLayout.helpers({
     },
     viimeinenKirjaus: function(user){
       return dateConvertEuro(Arkisto.find({Owner: user}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+    },
+    viimeisinKirjaus: function(){
+      return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
     }
 });
 
@@ -168,6 +171,14 @@ Template.KirjausSumma.onRendered(function(){
     document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     $("#nm").focus();
 });
+
+  Template.lataus.events({
+    'click #download': function (e) {       
+      csv = json2csv(Arkisto.find().fetch(), true, false)     
+      e.target.href = "data:text/csv;charset=unicode," + escape(csv) 
+      e.target.download = "Arkisto.csv";    
+    }
+  });
 
 
 //Helper function: returns sum of all prices in staging area

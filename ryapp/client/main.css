@@ -156,6 +156,12 @@ tr:nth-child(odd){
   padding-left: 10px;
 }
 
+#download{
+  margin-top: 30px;
+  background-color: #33cc33;
+  color: white;
+}
+
 .typeahead {
   background-color: #fff;
 }

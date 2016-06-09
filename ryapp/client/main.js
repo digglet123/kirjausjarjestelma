@@ -90,6 +90,7 @@ Template.KirjausLayout.events({
       amount : 1,
       date: dateConvertIso(date), 
       markDate : new Date(),
+      username: Meteor.user().username,
       Owner : Meteor.user()
     });
 
@@ -174,8 +175,8 @@ Template.KirjausSumma.onRendered(function(){
 
   Template.lataus.events({
     'click #download': function (e) {       
-      csv = json2csv(Arkisto.find().fetch(), true, false)     
-      e.target.href = "data:text/csv;charset=unicode," + escape(csv) 
+      csv = json2csv(Arkisto.find({},{fields: {'name':1, 'price':1, 'amount':1, 'date':1, 'username':1}}).fetch(), true, false);   
+      e.target.href = "data:text/csv;charset=unicode," + escape(csv);
       e.target.download = "Arkisto.csv";    
     }
   });

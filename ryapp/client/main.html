@@ -27,33 +27,37 @@
 <template name="KirjausLayout">
 	<header>
 		<h1>Tuotteiden kirjaus</h1>
-		{{#if currentUser}}
-		<form class="new-kirjaus">
-			{{>typeform}}
-			<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €/kpl" required="true" autocomplete="off"> 
-			{{> DatePicker}}
-			<input class = "green_btn" id = "add" type="submit" value="lisää">
-		</form>
-		{{/if}}
 	</header>
 	{{#if currentUser}}
+		<div class="top">
+			<form class="new-kirjaus">
+				{{>typeform}}
+				<input class = "input" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €/kpl" required="true" autocomplete="off"> 
+				{{> DatePicker}}
+				<input class = "green_btn" id = "add" type="submit" value="lisää">
+			</form>
+		</div>
 		{{#if hasItems}}
-		<table class="mainTable">
-			<tr>
-				<th>tuote</th>
-				<th>hinta</th>
-				<th>päivämäärä</th>
-				<th>kpl</th>
-			</tr>
-		    {{#each kirjaukset}}
-	            {{> kirjaus}}
-	        {{/each}}
-		</table>	
-		<footer>
-			<label id = "yht">Yhteensä:</label>
-			{{> KirjausSumma}}
-			<button class = "green_btn" id = "ins" >kirjaa tuotteet</button>
-		</footer>
+			<hr>
+			<div class="bottom">
+					<table class="mainTable">
+						<tr>
+							<th>tuote</th>
+							<th>hinta</th>
+							<th>päivämäärä</th>
+							<th>kpl</th>
+						</tr>
+					    {{#each kirjaukset}}
+				            {{> kirjaus}}
+				        {{/each}}
+					</table>			
+			</div>
+			<hr>
+			<footer>
+				<label id = "yht">Yhteensä:</label>
+				{{> KirjausSumma}}
+				<button class = "green_btn" id = "ins" >kirjaa tuotteet</button>
+			</footer>
 		{{/if}}
 	{{else}}
 		<div class="message"><label>Kirjaudu sisään tehdäksesi kirjauksia.</label></div>
@@ -70,38 +74,56 @@
 	<header>
 		<h1>Arkisto</h1>
 	</header>
-	<table class="secondaryTable">
-		<tr>
-			<th>kirjaaja</th>		
-			<th>summa</th>
-			<th>viimeisin kirjaus</th>
-		</tr>
-		{{#each kirjaajat}}
+	<div class = "top">
+		<label class ="tag">Tilastot:</label>
+		<table class="secondaryTable">
 			<tr>
-				<td><label>{{username}}</label></td>				
-				<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
-				<td>{{viimeinenKirjaus this}}</td>	
+				<th>kirjaaja</th>		
+				<th>summa</th>
+				<th>viimeisin kirjaus</th>
 			</tr>
-		{{/each}}
-		<tr>
-			<td><label>yhteenveto</label></td>
-			<td><label class="total">{{kokonaisSumma}} €</label></td>
-			<td>{{viimeisinKirjaus}}</td>
-		</tr>
-	</table>
-	<table class="mainTable">
-		<tr>
-			<th>tuote</th>
-			<th>hinta</th>
-			<th>kpl</th>
-			<th>päivämäärä</th>
-			<th>kirjaaja</th>
-		</tr>
-	    {{#each arkistot}}
-            {{> arkisto}}
-        {{/each}}
-	</table>
-	{{>lataus}}
+			{{#each kirjaajat}}
+				<tr>
+					<td><label>{{username}}</label></td>				
+					<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
+					<td>{{viimeinenKirjaus this}}</td>	
+				</tr>
+			{{/each}}
+			<tr>
+				<td><label>yhteenveto</label></td>
+				<td><label class="total">{{kokonaisSumma}} €</label></td>
+				<td>{{viimeisinKirjaus}}</td>
+			</tr>
+		</table>		
+	</div>
+	<hr>
+	<div class="control">
+		<div class="sort">
+			<label>Järjestä:</label>
+			<form action="">
+				<input type="radio" name="sort" value="kirjaus">Kirjauspäivän mukaan<br>
+				<input type="radio" name="sort" value="osto">Ostopäivän mukaan<br>
+			</form>			
+		</div>
+		<div class="download">
+			{{>lataus}}
+		</div>
+	</div>
+	<div class= "bottom">
+		<label class="tag">Kirjaukset:</label>
+		<table class="mainTable">
+			<tr>
+				<th>tuote</th>
+				<th>hinta</th>
+				<th>kpl</th>
+				<th>päivämäärä</th>
+				<th>kirjaaja</th>
+			</tr>
+		    {{#each arkistot}}
+	            {{> arkisto}}
+	        {{/each}}
+		</table>		
+	</div>
 </template>
 
 
@@ -125,8 +147,7 @@
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td>{{prettyDate date}} </td>
-	    <td><input class = "stepper" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on"
- 		onselectstart="return false;"></td>
+	    <td><input class = "stepper" id = "amnt" type="number" name="amount"  value = {{amount}} required="true" autocomplete="off" min = "0" max = "9" onkeydown="return false"  unselectable="on" onfocus="this.blur()" onselectstart="return false;"></td>
 	</tr>
 </template>
 

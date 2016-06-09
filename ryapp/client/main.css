@@ -14,9 +14,19 @@ body {
   background: #333;
 }
 
+.top{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.bottom{
+  padding-top: 30px;
+  padding-bottom: 30px;  
+}
+
 
 header {
-  padding: 20px 15px 20px 15px;
+  padding: 30px 15px 20px 15px;
   position: relative;
 
 }
@@ -39,12 +49,6 @@ h1 {
   width: 100%;
   border: 1px solid black;
   border-collapse: collapse;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 
 }
 
@@ -52,7 +56,6 @@ h1 {
   width: 100%;
   border: 1px solid black;
   border-collapse: collapse;
-  margin-bottom: 30px;
 }
 
 th, td {
@@ -156,10 +159,25 @@ tr:nth-child(odd){
   padding-left: 10px;
 }
 
-#download{
-  margin-top: 30px;
+.control{
+  height:80px;
+  padding-top: 30px
+  padding-bottom: 30px;
+}
+
+.sort{
+  float: left;
+}
+
+
+.btn-default{
   background-color: #33cc33;
   color: white;
+}
+
+.download{
+  float: right;
+  padding-top: 20px;
 }
 
 .typeahead {

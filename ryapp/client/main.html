@@ -102,7 +102,7 @@
 			<div class="sort">
 				<label>Järjestä:</label>
 				<form>
-					<input type="radio" name="sort" value="kirjaus" id ="kirjaus">Kirjauspäivän mukaan<br>
+					<input type="radio" name="sort" value="kirjaus" id ="kirjaus" checked>Kirjauspäivän mukaan<br>
 					<input type="radio" name="sort" value="osto" id ="osto">Ostopäivän mukaan<br>
 				</form>			
 			</div>
@@ -120,11 +120,9 @@
 					<th>päivämäärä</th>
 					<th>kirjaaja</th>
 				</tr>
-				{{#if currentUser}}
-				    {{#each arkistot}}
-			            {{> arkisto}}
-			        {{/each}}
-		        {{/if}}
+			    {{#each arkistot}}
+		            {{> arkisto}}
+		        {{/each}}
 			</table>		
 		</div>
 	{{else}}

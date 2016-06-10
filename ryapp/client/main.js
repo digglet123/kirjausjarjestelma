@@ -4,6 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import './main.html';
 
 Meteor.subscribe("tuotteet");
+Session.set("sort_by", "markDate"); 
 
 Template.ArkistoLayout.onCreated(function(){
   this.subscribe("arkisto");
@@ -22,7 +23,13 @@ Template.KirjausLayout.helpers({
 Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
     arkistot: function(){
-      return Arkisto.find({}, {sort: {'markDate': -1}});
+      var togg = Session.get("sort_by");
+      if (togg == "markDate"){
+         return Arkisto.find({}, {sort: {'markDate': -1}});
+      } 
+      else {
+         return Arkisto.find({}, {sort: {'date': -1}});
+      }     
     },
     kirjaajat: function(){
       var myArray = Arkisto.find().fetch();
@@ -40,18 +47,18 @@ Template.ArkistoLayout.helpers({
     },
     viimeisinKirjaus: function(){
       return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
-    },
-    isChecked: function(){
-      return $("#kirjaus").is(":checked");
     }
 });
 
 Template.ArkistoLayout.events({
-  'click .secondaryTable': function(){
-    console.log($("#kirjaus").is(":checked"));
+  'change #kirjaus': function(){
+    Session.set("sort_by", "markDate");
+  },
+  'change #osto': function(){
+    Session.set("sort_by", "date");
   }
 });
-
+  
 Template.typeform.helpers({
   //creates product name array for typeahead
     etsi: function() {

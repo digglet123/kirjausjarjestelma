@@ -74,56 +74,62 @@
 	<header>
 		<h1>Arkisto</h1>
 	</header>
-	<div class = "top">
-		<label class ="tag">Tilastot:</label>
-		<table class="secondaryTable">
-			<tr>
-				<th>kirjaaja</th>		
-				<th>summa</th>
-				<th>viimeisin kirjaus</th>
-			</tr>
-			{{#each kirjaajat}}
+	{{#if Template.subscriptionsReady}}
+		<div class = "top">
+			<label class ="tag">Tilastot:</label>
+			<table class="secondaryTable">
 				<tr>
-					<td><label>{{username}}</label></td>				
-					<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
-					<td>{{viimeinenKirjaus this}}</td>	
+					<th>kirjaaja</th>		
+					<th>summa</th>
+					<th>viimeisin kirjaus</th>
 				</tr>
-			{{/each}}
-			<tr>
-				<td><label>yhteenveto</label></td>
-				<td><label class="total">{{kokonaisSumma}} €</label></td>
-				<td>{{viimeisinKirjaus}}</td>
-			</tr>
-		</table>		
-	</div>
-	<hr>
-	<div class="control">
-		<div class="sort">
-			<label>Järjestä:</label>
-			<form action="">
-				<input type="radio" name="sort" value="kirjaus">Kirjauspäivän mukaan<br>
-				<input type="radio" name="sort" value="osto">Ostopäivän mukaan<br>
-			</form>			
+				{{#each kirjaajat}}
+					<tr>
+						<td><label>{{username}}</label></td>				
+						<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
+						<td>{{viimeinenKirjaus this}}</td>	
+					</tr>
+				{{/each}}
+				<tr>
+					<td><label>yhteenveto</label></td>
+					<td><label class="total">{{kokonaisSumma}} €</label></td>
+					<td>{{viimeisinKirjaus}}</td>
+				</tr>
+			</table>		
 		</div>
-		<div class="download">
-			{{>lataus}}
+		<hr>
+		<div class="control">
+			<div class="sort">
+				<label>Järjestä:</label>
+				<form>
+					<input type="radio" name="sort" value="kirjaus" id ="kirjaus">Kirjauspäivän mukaan<br>
+					<input type="radio" name="sort" value="osto" id ="osto">Ostopäivän mukaan<br>
+				</form>			
+			</div>
+			<div class="download">
+				{{>lataus}}
+			</div>
 		</div>
-	</div>
-	<div class= "bottom">
-		<label class="tag">Kirjaukset:</label>
-		<table class="mainTable">
-			<tr>
-				<th>tuote</th>
-				<th>hinta</th>
-				<th>kpl</th>
-				<th>päivämäärä</th>
-				<th>kirjaaja</th>
-			</tr>
-		    {{#each arkistot}}
-	            {{> arkisto}}
-	        {{/each}}
-		</table>		
-	</div>
+		<div class= "bottom">
+			<label class="tag">Kirjaukset:</label>
+			<table class="mainTable">
+				<tr>
+					<th>tuote</th>
+					<th>hinta</th>
+					<th>kpl</th>
+					<th>päivämäärä</th>
+					<th>kirjaaja</th>
+				</tr>
+				{{#if currentUser}}
+				    {{#each arkistot}}
+			            {{> arkisto}}
+			        {{/each}}
+		        {{/if}}
+			</table>		
+		</div>
+	{{else}}
+		<div class="message"><label>Loading...</label></div>
+	{{/if}}
 </template>
 
 

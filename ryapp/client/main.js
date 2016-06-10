@@ -3,8 +3,11 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import './main.html';
 
-Meteor.subscribe("arkisto");
 Meteor.subscribe("tuotteet");
+
+Template.ArkistoLayout.onCreated(function(){
+  this.subscribe("arkisto");
+});
 
 Template.KirjausLayout.helpers({    
     //Returns all items in staging collection
@@ -19,7 +22,7 @@ Template.KirjausLayout.helpers({
 Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
     arkistot: function(){
-        return Arkisto.find({}, {sort: {'markDate': -1}});
+      return Arkisto.find({}, {sort: {'markDate': -1}});
     },
     kirjaajat: function(){
       var myArray = Arkisto.find().fetch();
@@ -37,7 +40,16 @@ Template.ArkistoLayout.helpers({
     },
     viimeisinKirjaus: function(){
       return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+    },
+    isChecked: function(){
+      return $("#kirjaus").is(":checked");
     }
+});
+
+Template.ArkistoLayout.events({
+  'click .secondaryTable': function(){
+    console.log($("#kirjaus").is(":checked"));
+  }
 });
 
 Template.typeform.helpers({
@@ -57,7 +69,7 @@ Template.typeform.onRendered(function(){
 
 //Options for datepicker element
 var dateDropperOptions = { 
-	animation: "dropdown",          
+	  animation: "dropdown",          
     format:"d-m-Y",
     animate_current: false,
     lock: "to",
@@ -175,7 +187,7 @@ Template.KirjausSumma.onRendered(function(){
 
   Template.lataus.events({
     'click #download': function (e) {       
-      csv = json2csv(Arkisto.find({},{fields: {'name':1, 'price':1, 'amount':1, 'date':1, 'username':1}}).fetch(), true, false);   
+      csv = json2csv(Arkisto.find({},{fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}).fetch(), true, false);   
       e.target.href = "data:text/csv;charset=unicode," + escape(csv);
       e.target.download = "Arkisto.csv";    
     }
@@ -206,6 +218,10 @@ function kerroHenkiloSumma(user){
 //Helper function to determine number of items in staging area
 function stagingCount(){
   return Kirjaukset.find().count();
+}
+
+function archiveCount(){
+  return Arkisto.find().count();
 }
 
 //Helper for converting date strings from euro to iso

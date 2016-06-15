@@ -229,10 +229,27 @@ Template.KirjausSumma.onRendered(
 );
 
   Template.lataus.events({
-    'click #download': function (e) {       
-      csv = json2csv(Arkisto.find({},{fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}).fetch(), true, false);   
+    'click #download': function (e) {
+      var togg = Session.get("sort_by");
+      var sel = Session.get("filter_by");
+      if (togg == "markDate"){
+        if (sel == "kaikki") {
+          csv = json2csv(Arkisto.find({}, {fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}).fetch(), true, false);
+        }
+        else{
+           csv = json2csv(Arkisto.find({username: sel}, {fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}, {sort: {'markDate': -1}}).fetch(), true, false);
+        }
+      } 
+      else {
+        if (sel == "kaikki") {
+           csv = json2csv(Arkisto.find({}, {fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}, {sort: {'date': -1}}).fetch(), true, false);
+        }
+        else{
+           csv = json2csv(Arkisto.find({username: sel}, {fields: {'name':1, 'price':1,'unitPrice':1, 'amount':1, 'date':1, 'username':1}}, {sort: {'date': -1}}).fetch(), true, false);
+        }               
+      }
       e.target.href = "data:text/csv;charset=unicode," + escape(csv);
-      e.target.download = "Arkisto.csv";    
+      e.target.download = "Arkisto.csv"; 
     }
   });
 

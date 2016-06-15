@@ -1,0 +1,84 @@
+<template name="ArkistoLayout">
+	<header>
+		<h1>Arkisto</h1>
+	</header>
+	{{#if Template.subscriptionsReady}}
+		<div class = "top">
+			<h2 class ="tag">Tilastot</h2>
+			<table class="secondaryTable">
+				<tr>
+					<th>kirjaaja</th>		
+					<th>summa</th>
+					<th>viimeisin kirjaus</th>
+				</tr>
+				{{#each kirjaajat}}
+					<tr>
+						<td><label>{{username}}</label></td>				
+						<td><label class="total">{{kirjaajaSumma this}} €</label></td>	
+						<td>{{viimeinenKirjaus this}}</td>	
+					</tr>
+				{{/each}}
+				<tr>
+					<td><label>yhteenveto</label></td>
+					<td><label class="total">{{kokonaisSumma}} €</label></td>
+					<td>{{viimeisinKirjaus}}</td>
+				</tr>
+			</table>		
+		</div>
+		<hr>
+		<h2 class="tag">Kirjaukset</h2>
+		<div class="control">
+			<div class="sort">
+				<label>Järjestä:</label>
+				<form>
+					<input type="radio" name="sort" value="kirjaus" id ="kirjaus" checked>Kirjauspäivän mukaan<br>
+					<input type="radio" name="sort" value="osto" id ="osto">Ostopäivän mukaan<br>
+				</form>			
+			</div>
+			<div class="filter">
+				<label>Näytä:</label>
+				<select id="filter">
+					{{#each kirjaajat}}
+				  		<option>{{username}}</option>
+				  	{{/each}}
+				  	<option selected>kaikki</option>
+				</select>
+			</div>
+			<div class="download">
+				{{>lataus}}
+			</div>
+		</div>
+		<div class= "bottom">
+			<table class="mainTable">
+				<tr>
+					<th>tuote</th>
+					<th>hinta</th>
+					<th>kpl</th>
+					<th>päivämäärä</th>
+					<th>kirjaaja</th>
+				</tr>
+			    {{#each arkistot}}
+		            {{> arkisto}}
+		        {{/each}}
+			</table>		
+		</div>
+	{{else}}
+		<div class="message"><label>Loading...</label></div>
+	{{/if}}
+</template>
+
+
+<template name="lataus">
+	<a href="#" class="btn btn-default" role="button" id="download">Lataa CSV</a>
+</template>
+
+
+<template name="arkisto">
+	<tr>
+		<td>{{name}}</td>
+	    <td>{{price}} €</td>
+	    <td>{{amount}}</td>
+	    <td>{{prettyDate date}}</td>
+	    <td><label id = "name">{{Owner.username}}</label>{{#if isOwner}}<button id = "delete">poista</button>{{/if}}</td>
+	</tr>
+</template>

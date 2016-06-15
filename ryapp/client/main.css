@@ -108,7 +108,7 @@ tr:nth-child(odd){
   font-weight: bold;
   background: #DE4F4F;
   color: #FFF;
-  font-size: 1em;
+  font-size: 12px;
   padding: 5px 10px;
   border: none;
   border-radius: 4px;;
@@ -157,6 +157,10 @@ tr:nth-child(odd){
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 10px;
+}
+
+.input:focus{
+  border: 2px solid #33cc33;
 }
 
 .control{

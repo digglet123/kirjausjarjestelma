@@ -102,6 +102,7 @@ Template.typeform.onRendered(function(){
 
 //Options for datepicker element
 var dateDropperOptions = { 
+    lang: "en",
 	  animation: "dropdown",          
     format:"d-m-Y",
     animate_current: false,

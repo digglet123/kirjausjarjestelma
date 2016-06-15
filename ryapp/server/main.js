@@ -13,7 +13,12 @@ Meteor.methods({
 	poistaKirjaus: function(id){
 		Arkisto.remove(id);
 	},
-	
+	paivitaTuoteHinta: function(nimi, uusiHinta){
+		Tuotteet.update({name : nimi},{$set:{unitPrice : uusiHinta}});
+	},
+	lisaaTuote: function(lisattava){
+		Tuotteet.insert(lisattava);
+	}
 });
 
 Meteor.publish("arkisto", function(){

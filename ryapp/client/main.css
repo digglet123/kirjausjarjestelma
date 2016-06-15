@@ -160,13 +160,35 @@ tr:nth-child(odd){
 }
 
 .control{
-  height:80px;
-  padding-top: 30px
-  padding-bottom: 30px;
+    background-color: #e6e6e6;
+    width:100%;
+    display: inline-block;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+          border-radius: 8px;
 }
 
-.sort{
-  float: left;
+.sort {
+    float:left;
+    padding: 30px;
+}
+
+.filter{
+    float: left;
+    padding: 30px;
+}
+
+.download {
+    float: right;
+    padding: 30px;
+}
+
+#filter{
+    border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  outline: none;
 }
 
 
@@ -175,10 +197,6 @@ tr:nth-child(odd){
   color: white;
 }
 
-.download{
-  float: right;
-  padding-top: 20px;
-}
 
 .typeahead {
   background-color: #fff;

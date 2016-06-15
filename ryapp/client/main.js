@@ -5,6 +5,7 @@ import './main.html';
 
 Meteor.subscribe("tuotteet");
 Session.set("sort_by", "markDate"); 
+Session.set("filter_by", "kaikki");
 
 Template.ArkistoLayout.onCreated(function(){
   this.subscribe("arkisto");
@@ -24,11 +25,22 @@ Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
     arkistot: function(){
       var togg = Session.get("sort_by");
+      var sel = Session.get("filter_by");
       if (togg == "markDate"){
-         return Arkisto.find({}, {sort: {'markDate': -1}});
+        if (sel == "kaikki") {
+          return Arkisto.find({}, {sort: {'markDate': -1}});
+        }
+        else{
+          return Arkisto.find({username: sel}, {sort: {'markDate': -1}});
+        }
       } 
       else {
-         return Arkisto.find({}, {sort: {'date': -1}});
+        if (sel == "kaikki") {
+          return Arkisto.find({}, {sort: {'date': -1}});
+        }
+        else{
+          return Arkisto.find({username: sel}, {sort: {'date': -1}});
+        }
       }     
     },
     kirjaajat: function(){
@@ -43,10 +55,14 @@ Template.ArkistoLayout.helpers({
       return kerroSumma(Arkisto).toFixed(2);
     },
     viimeinenKirjaus: function(user){
-      return dateConvertEuro(Arkisto.find({Owner: user}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+        if(hasItems(user)){
+          return dateConvertEuro(Arkisto.find({Owner: user}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+        }
     },
     viimeisinKirjaus: function(){
-      return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+      if(archiveCount() > 0){
+        return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
+      }
     }
 });
 
@@ -56,8 +72,18 @@ Template.ArkistoLayout.events({
   },
   'change #osto': function(){
     Session.set("sort_by", "date");
+  },
+  'change #filter': function(){
+    Session.set("filter_by", event.target.value);
   }
 });
+
+Template.ArkistoLayout.onRendered( 
+  function(){
+    Session.set("sort_by", "markDate");
+    Session.set("filter_by", "kaikki");
+  }
+);
   
 Template.typeform.helpers({
   //creates product name array for typeahead
@@ -112,6 +138,13 @@ Template.KirjausLayout.events({
       username: Meteor.user().username,
       Owner : Meteor.user()
     });
+
+    if(productExists(title)){
+      Meteor.call("paivitaTuoteHinta", title, price);
+    }
+    else{
+      Meteor.call("lisaaTuote", {name: title, unitPrice: price});
+    }
 
     if(stagingCount() > 1){
       document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
@@ -186,11 +219,13 @@ Template.kirjaus.helpers({
   }
 });
 
-Template.KirjausSumma.onRendered(function(){
+Template.KirjausSumma.onRendered(
+  function(){
     //Update sum of products 
     document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     $("#nm").focus();
-});
+  }
+);
 
   Template.lataus.events({
     'click #download': function (e) {       
@@ -239,6 +274,14 @@ function dateConvertIso(dateString){
 //Helper for converting date strings from iso to euro
 function dateConvertEuro(dateString){
   return dateString.replace( /(\d{4})-(\d{2})-(\d{2})/, "$3-$2-$1");
+}
+
+function hasItems(user){
+  return Arkisto.find({Owner: user}).count() > 0;
+}
+
+function productExists(prodName){
+  return Tuotteet.find({name: prodName}).count() > 0;
 }
 
 //Configure AccountsUI

@@ -14,16 +14,6 @@ body {
   background: #333;
 }
 
-.top{
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
-.bottom{
-  padding-top: 30px;
-  padding-bottom: 30px;  
-}
-
 
 header {
   padding: 30px 15px 20px 15px;
@@ -43,19 +33,6 @@ h1 {
   margin-bottom: 10px;
   display: inline-block;
   margin-right: 1em;
-}
-
-.mainTable {
-  width: 100%;
-  border: 1px solid black;
-  border-collapse: collapse;
-
-}
-
-.secondaryTable{
-  width: 100%;
-  border: 1px solid black;
-  border-collapse: collapse;
 }
 
 th, td {
@@ -92,6 +69,28 @@ tr:nth-child(odd){
           box-shadow: 0 5px 10px rgba(0,0,0,.2);
 }
 
+.top{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.bottom{
+  padding-top: 30px;
+  padding-bottom: 30px;  
+}
+
+.mainTable {
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+
+}
+
+.secondaryTable{
+  width: 100%;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
 
 .nav-item{
   margin: 10px;
@@ -261,6 +260,3 @@ tr:nth-child(odd){
   color : #33cc33;
 }
 
-#name{
-  float: center;
-}

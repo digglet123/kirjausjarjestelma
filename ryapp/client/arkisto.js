@@ -107,7 +107,7 @@ Template.lataus.events({
     }               
   }
   e.target.href = "data:text/csv;charset=unicode," + escape(csv);
-  e.target.download = "Arkisto.csv"; 
+  e.target.download = "Arkisto_" + dateConvertEuro(new Date().toISOString().substring(0,10)) + ".csv"; 
 }
 });
 

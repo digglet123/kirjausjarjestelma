@@ -95,7 +95,7 @@ Template.KirjausLayout.events({
 
 //Amount spinner events
 Template.kirjaus.events({
-	'click .stepper': function(){
+	'change .stepper': function(){
     //Delete item from staging area if amount is set to 0
     if(event.target.value == 0){
       Kirjaukset.remove(this._id);
@@ -112,9 +112,6 @@ Template.kirjaus.events({
     if(stagingCount() > 0){
       document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
     }
-
-    //Focus on form after delete button is pressed
-    $("#nm").focus();
 	}
 });
 

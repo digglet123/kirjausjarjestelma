@@ -2,9 +2,7 @@
 	<head>
 	  <title>ryapp</title>
 	  <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	  <meta name="mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	  <link rel="icon" href="favicon.ico">
 	</head>
 	<body>
@@ -17,15 +15,11 @@
 
 
 <template name="navigation">
-	<nav class = "top-nav">
-		<ul>
-			<a class ="nav-item" href="/kirjaus">Kirjaus</a>
-			<a class ="nav-item" href="/arkisto">Arkisto</a>
-			<div class = "login">
-				{{> loginButtons align="right"}}
-			</div>
-		</ul>
-	</nav>
+	<div class="row">
+		<div class="col-xs-4 col-md-4"><a href="/kirjaus">Kirjaus</a></div>
+	 	<div class="col-xs-4 col-md-4"><a href="/arkisto">Arkisto</a></div>
+	 	<div class="col-xs-4 col-md-4">{{> loginButtons align="right"}}</div>
+	</div>
 </template>
 
 

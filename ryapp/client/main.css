@@ -2,25 +2,65 @@ body {
   background: #333;
 }
 
-.container {
-  padding-top: 30px;
-  padding-bottom: 60px;
-  background: white;
-  min-height: 100vh;
+h1 {
+  color: #33cc33;
 }
+th {
+  color:white;
+  background-color:  #33cc33;
+
+}
+
+tr:nth-child(even){
+  background-color: #fff;
+}
+
+tr:nth-child(odd){
+  background-color: #eee;
+}
+
+@media screen and (max-width: 600px) {
+  .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background: white;
+    min-height: 100vh;
+  }
+}
+@media screen and (min-width: 600px) {
+  .container {
+    padding-top: 30px;
+    padding-bottom: 60px;
+    background: white;
+    min-height:100%;
+    border-radius: 0px 0px 16px 16px;
+  }
+}
+
 
 .twitter-typeahead{
     width: 100% !important;
 }
 
 .stepper{
-  width: 3em;
+  color : #33cc33;
+  width: 50px; 
+  height: 30px;
+  font-family: sans-serif;
+  font-size: 16px;
+  border: 2px solid #ccc;
+  -webkit-border-radius: 8px;
+     -moz-border-radius: 8px;
+          border-radius: 8px;
+  outline: none;
+  padding-left: 10px;
 }
 
 .form-control,
 .typeahead,
 .tt-query,
 .tt-hint {
+  width:100% !important;
   padding: 8px 12px;
   line-height: 30px;
   border: 2px solid #ccc;
@@ -42,20 +82,6 @@ body {
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
      -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
           box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-}
-
-th {
-  color:white;
-  background-color:  #33cc33;
-
-}
-
-tr:nth-child(even){
-  background-color: #fff;
-}
-
-tr:nth-child(odd){
-  background-color: #eee;
 }
 
 .tt-hint {
@@ -102,5 +128,15 @@ tr:nth-child(odd){
 
 .table-striped{
 
+}
+
+.control{
+    padding-top: 20px;
+    background-color: #e6e6e6;
+    width:100%;
+    display: inline-block;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+          border-radius: 8px;
 }
 

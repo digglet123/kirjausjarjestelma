@@ -5,7 +5,8 @@
 	{{#if Template.subscriptionsReady}}
 		<div class = "top">
 			<h2 class ="tag">Tilastot</h2>
-			<table class="table table-striped table-bordered table-condensed">
+			<div class="row">
+				<table class="table table-striped table-bordered">
 				<thead>
 					<tr>
 						<th>kirjaaja</th>		
@@ -27,17 +28,17 @@
 						<td>{{viimeisinKirjaus}}</td>
 					</tr>
 				</tbody>
-			</table>		
+			</table>
+			</div>		
 		</div>
 		<hr>
 
 
 
 		<h2 class="tag">Kirjaukset</h2>
-		<div class="row control">
-			<form class="form col-md-12">
-				<div class="form-group col-md-4">
-
+		<div class="row">
+			<form class="form control">
+				<div class="form-group col-xs-8 col-md-4">
 					<label>Järjestä:</label>
 					<div class="radio">
 						<label><input type="radio" name="sort" value="kirjaus" id ="kirjaus" checked>Kirjauspäivän mukaan</label>
@@ -47,8 +48,7 @@
 						<label><input type="radio" name="sort" value="osto" id ="osto">Ostopäivän mukaan</label>
 					</div>
 				</div>
-
-				<div class="form-group col-md-4">
+				<div class="form-group col-xs-4 col-md-4">
 					<label>Näytä:</label>
 					<select id="filter">
 						{{#each kirjaajat}}
@@ -57,21 +57,21 @@
 					  	<option selected>kaikki</option>
 					</select>
 				</div>
-
-				<div class="form-group col-md-2 col-md-offset-2">
+				<div class="form-group col-xs-6 col-md-2 col-md-offset-2">
 					{{>lataus}}
 				</div>
-			</form>	
+			</form>
 		</div>
+				
 		<hr>
-		<div class= "bottom">
+		<div class= "bottom row">
 			<table class="table table-striped table-bordered table-condensed">
 				<thead>
 					<tr>
 						<th>tuote</th>
 						<th>hinta</th>
-						<th>kpl</th>
-						<th>päivämäärä</th>
+						<th class="hidden-xs">kpl</th>
+						<th class="hidden-xs">päivämäärä</th>
 						<th>kirjaaja</th>
 					</tr>
 				</thead>
@@ -80,12 +80,6 @@
 		            	{{> arkisto}}
 		        	{{/each}}
 				</tbody>
-			</table>
-
-
-			<table class="mainTable">
-				
-			    
 			</table>		
 		</div>
 	{{else}}
@@ -95,7 +89,7 @@
 
 
 <template name="lataus">
-	<a href="#" class="btn btn-success" role="button" id="download">Lataa CSV</a>
+	<a href="#" class="btn btn-success btn-block hidden-xs" role="button" id="download">Lataa CSV</a>
 </template>
 
 
@@ -103,8 +97,8 @@
 	<tr>
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
-	    <td>{{amount}}</td>
-	    <td>{{prettyDate date}}</td>
-	    <td><label>{{Owner.username}}</label>{{#if isOwner}}<button class="btn btn-danger btn-xs" id = "delete">poista</button>{{/if}}</td>
+	    <td class="hidden-xs">{{amount}}</td>
+	    <td class="hidden-xs">{{prettyDate date}}</td>
+	    <td><label>{{Owner.username}}</label>{{#if isOwner}}<button class="btn btn-danger btn-xs pull-right" id = "delete">poista</button>{{/if}}</td>
 	</tr>
 </template>

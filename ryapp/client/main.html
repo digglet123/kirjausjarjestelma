@@ -3,7 +3,7 @@
 	  <title>ryapp</title>
 	  <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	  <link rel="icon" href="favicon.ico">
+	  <link rel="icon" sizes="16x16 32x32 512x512" href="/favicon.ico?v=2">
 	</head>
 	<body>
 		<div class="container">
@@ -16,9 +16,9 @@
 
 <template name="navigation">
 	<div class="row">
-		<div class="col-xs-4 col-md-4"><a href="/kirjaus">Kirjaus</a></div>
-	 	<div class="col-xs-4 col-md-4"><a href="/arkisto">Arkisto</a></div>
-	 	<div class="col-xs-4 col-md-4">{{> loginButtons align="right"}}</div>
+		<div class="col-xs-2 col-md-1"><a href="/kirjaus">Kirjaus</a></div>
+	 	<div class="col-xs-2 col-md-1"><a href="/arkisto">Arkisto</a></div>
+	 	<div class="col-xs-8 col-md-10"><span class="pull-right">{{> loginButtons align="right"}}</span></div>
 	</div>
 </template>
 

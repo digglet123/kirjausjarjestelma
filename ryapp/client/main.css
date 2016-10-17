@@ -19,7 +19,7 @@ tr:nth-child(odd){
   background-color: #eee;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .container {
     padding-top: 30px;
     padding-bottom: 30px;
@@ -27,7 +27,7 @@ tr:nth-child(odd){
     min-height: 100vh;
   }
 }
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
   .container {
     padding-top: 30px;
     padding-bottom: 60px;
@@ -35,6 +35,10 @@ tr:nth-child(odd){
     min-height:100%;
     border-radius: 0px 0px 16px 16px;
   }
+}
+
+.HammerTouchArea{
+  color:green;
 }
 
 
@@ -61,12 +65,7 @@ tr:nth-child(odd){
 .tt-query,
 .tt-hint {
   width:100% !important;
-  padding: 8px 12px;
-  line-height: 30px;
   border: 2px solid #ccc;
-  -webkit-border-radius: 8px;
-     -moz-border-radius: 8px;
-          border-radius: 8px;
   outline: none;
 }
 

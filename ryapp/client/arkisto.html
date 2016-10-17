@@ -40,17 +40,14 @@
 			<form class="form control">
 				<div class="form-group col-xs-8 col-md-4">
 					<label>Järjestä:</label>
-					<div class="radio">
-						<label><input type="radio" name="sort" value="kirjaus" id ="kirjaus" checked>Kirjauspäivän mukaan</label>
-					</div>
-
-					<div class="radio">
-						<label><input type="radio" name="sort" value="osto" id ="osto">Ostopäivän mukaan</label>
-					</div>
+					<select class="form-control" id="sort">
+					  	<option value="markDate" selected>Kirjauspäivän mukaan</option>
+					  	<option value="date">Ostopäivän mukaan</option>
+					</select>
 				</div>
 				<div class="form-group col-xs-4 col-md-4">
 					<label>Näytä:</label>
-					<select id="filter">
+					<select class="form-control" id="filter">
 						{{#each kirjaajat}}
 					  		<option>{{username}}</option>
 					  	{{/each}}
@@ -58,6 +55,7 @@
 					</select>
 				</div>
 				<div class="form-group col-xs-6 col-md-2 col-md-offset-2">
+					<label class="hidden-xs">Lataa CSV:</label>
 					{{>lataus}}
 				</div>
 			</form>
@@ -71,7 +69,7 @@
 						<th>tuote</th>
 						<th>hinta</th>
 						<th class="hidden-xs">kpl</th>
-						<th class="hidden-xs">päivämäärä</th>
+						<th>päivämäärä</th>
 						<th>kirjaaja</th>
 					</tr>
 				</thead>
@@ -89,7 +87,7 @@
 
 
 <template name="lataus">
-	<a href="#" class="btn btn-success btn-block hidden-xs" role="button" id="download">Lataa CSV</a>
+	<a href="#" class="btn btn-success btn-block hidden-xs" role="button" id="download">Lataa</a>
 </template>
 
 
@@ -98,7 +96,7 @@
 		<td>{{name}}</td>
 	    <td>{{price}} €</td>
 	    <td class="hidden-xs">{{amount}}</td>
-	    <td class="hidden-xs">{{prettyDate date}}</td>
-	    <td><label>{{Owner.username}}</label>{{#if isOwner}}<button class="btn btn-danger btn-xs pull-right" id = "delete">poista</button>{{/if}}</td>
+	    <td>{{prettyDate date}}</td>
+	    <td><label>{{Owner.username}}</label>{{#if isOwner}}<button class="btn btn-danger btn-xs pull-right hidden-xs" id = "delete">poista</button>{{/if}}</td>
 	</tr>
 </template>

@@ -2,6 +2,7 @@ Template.ArkistoLayout.onCreated(function(){
   this.subscribe("arkisto");
 });
 
+
 Template.ArkistoLayout.helpers({
     //Returns all items in staging collection
     arkistot: function(){
@@ -48,11 +49,8 @@ Template.ArkistoLayout.helpers({
 });
 
 Template.ArkistoLayout.events({
-  'change #kirjaus': function(){
-    Session.set("sort_by", "markDate");
-  },
-  'change #osto': function(){
-    Session.set("sort_by", "date");
+  'change #sort': function(){
+    Session.set("sort_by", event.target.value);
   },
   'change #filter': function(){
     Session.set("filter_by", event.target.value);

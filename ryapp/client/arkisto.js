@@ -45,6 +45,34 @@ Template.ArkistoLayout.helpers({
       if(archiveCount() > 0){
         return dateConvertEuro(Arkisto.find({}, {sort: {'markDate': -1}}).fetch()[0].markDate.toISOString().substring(0,10));
       }
+    },
+    //Configure touch gestures
+    configureHammer: function () {
+      return function (hammer, templateInstance) {
+        var press = new Hammer.Press({
+          event: 'press',
+          pointers: 1,
+          threshold: 9,
+          time: 1000
+        });
+   
+        hammer.add(press);
+        return hammer;
+      }
+    },
+    //Set touch actions
+    templateGestures: {
+      'press #delframe': function (event, templateInstance) {
+        if(this.Owner._id === Meteor.userId()){
+          var popup = confirm("Haluatko varmasti poistaa tuotteen: " + this.name+"?");
+          if (popup == true) {
+            Meteor.call("poistaKirjaus", this._id);
+          }
+        }
+        else{
+          alert("Ei oikeuksia!");
+        }
+      }
     }
 });
 
@@ -81,7 +109,7 @@ Template.arkisto.helpers({
   },
   prettyDate: function(isoDate){
     return dateConvertEuro(isoDate);
-  } 
+  }
 });
 
 Template.lataus.events({

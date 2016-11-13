@@ -37,10 +37,14 @@ tr:nth-child(odd){
   }
 }
 
-.HammerTouchArea{
-  color:green;
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-
 
 .twitter-typeahead{
     width: 100% !important;

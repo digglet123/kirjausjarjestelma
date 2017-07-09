@@ -11,8 +11,12 @@
 <template name="main">
 	<body>
 		<div class="container">
-			{{> navigation}}
-			{{> Template.dynamic template=main}}
+      {{#if currentUser}}
+			   {{> navigation}}
+			   {{> Template.dynamic template=main}}
+      {{else}}
+        {{> LoginModal}}
+      {{/if}}
 	    </div>
 	</body>
 </template>
@@ -22,8 +26,6 @@
 	<div class="row">
 		<div class="col-xs-2 col-md-1"><a href="/kirjaus">Kirjaus</a></div>
 	 	<div class="col-xs-2 col-md-1"><a href="/arkisto">Arkisto</a></div>
-	 	<div class="col-xs-8 col-md-10"><span class="pull-right">{{> loginButtons align="right"}}</span></div>
+	 	<div class="col-xs-8 col-md-10"><a href="/" class="logout pull-right">logout {{currentUser.username}}</a></div>
 	</div>
 </template>
-
-

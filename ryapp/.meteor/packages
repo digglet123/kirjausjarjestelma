@@ -19,7 +19,7 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 accounts-base
 accounts-password
-accounts-ui
+useraccounts:bootstrap
 sergeyt:typeahead
 bjimdar:datedropper
 twbs:bootstrap
@@ -29,4 +29,3 @@ meteortoys:allthings
 axw:json2csv
 session
 chriswessels:hammer
-

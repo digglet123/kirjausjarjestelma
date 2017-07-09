@@ -9,7 +9,7 @@
 					{{>typeform}}
 				</div>
 				<div class="form-group col-xs-12 col-md-3">
-					<input class = "form-control" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €/kpl" required="true" autocomplete="off"> 
+					<input class = "form-control" id = "pr" type="number" step="0.01" name="prodPrice" placeholder ="hinta €/kpl" required="true" autocomplete="off">
 				</div>
 				<div class="form-group col-xs-12 col-md-3">
 					{{> DatePicker}}
@@ -38,7 +38,7 @@
 			        {{/each}}
 				</tbody>
 			</table>
-			</div>		
+			</div>
 			<hr>
 			<footer>
 				<div class="row">
@@ -50,7 +50,7 @@
 		{{/if}}
 	{{else}}
 		<div class="message"><label>Kirjaudu sisään tehdäksesi kirjauksia.</label></div>
-	{{/if}}	
+	{{/if}}
 </template>
 
 
@@ -59,7 +59,7 @@
 </template>
 
 <template name="DatePicker">
-	<input class = "form-control" id = "dt" type="text" name="purchaseDate" required="true">
+	<input class = "form-control" id = "dt" type="date" name="purchaseDate" required="true">
 </template>
 
 

@@ -1,14 +1,34 @@
-Template.KirjausLayout.helpers({    
+//Set the default date for today on page load. Also dont allow future dates.
+Template.DatePicker.onRendered(
+  function(){
+    var today = new Date();
+    document.getElementById('dt').valueAsDate = today;
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+          dd='0'+dd
+      }
+      if(mm<10){
+          mm='0'+mm
+      }
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("dt").setAttribute("max", today);
+  }
+);
+
+
+Template.KirjausLayout.helpers({
     //Returns all items in staging collection
     kirjaukset: function(){
-        return Kirjaukset.find();
+        return Kirjaukset.find().fetch().reverse();;
     },
     hasItems: function(){
-       return stagingCount() > 0;  
+       return stagingCount() > 0;
     }
 });
 
-  
+
 Template.typeform.helpers({
   //creates product name array for typeahead
     etsi: function() {
@@ -25,25 +45,26 @@ Template.typeform.onRendered(function(){
 });
 
 //Options for datepicker element
-var dateDropperOptions = { 
+var dateDropperOptions = {
     lang: "en",
-	  animation: "dropdown",          
+	  animation: "dropdown",
     format:"d-m-Y",
     animate_current: false,
     lock: "to",
     color: "#33cc33",
     //set placeholder to current date
-    placeholder: new Date().toISOString().substring(8,10) 
-    + "-" + new Date().toISOString().substring(5,8) 
+    placeholder: new Date().toISOString().substring(8,10)
+    + "-" + new Date().toISOString().substring(5,8)
     + new Date().toISOString().substring(0,4)
-                  
+
 };
 
 //Render datepicker
+/*
 Template.DatePicker.rendered = function() {
   $("#dt").dateDropper(dateDropperOptions);
 }
-  
+*/
 //KirjausLayout Events
 Template.KirjausLayout.events({
   //Actions when form is submitted
@@ -58,7 +79,7 @@ Template.KirjausLayout.events({
       unitPrice : Number(price),
       price : Number(price),
       amount : 1,
-      date: dateConvertIso(date), 
+      date: dateConvertIso(date),
       markDate : new Date(),
       username: Meteor.user().username,
       Owner : Meteor.user()
@@ -72,7 +93,7 @@ Template.KirjausLayout.events({
     }
 
     if(stagingCount() > 1){
-      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
+      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     }
 
     //Reset UI after adding product
@@ -108,9 +129,9 @@ Template.kirjaus.events({
         $set: { price: (this.unitPrice * event.target.value).toFixed(2) },
       });
     }
-    //Update sum of prices 
+    //Update sum of prices
     if(stagingCount() > 0){
-      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";  
+      document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     }
 	}
 });
@@ -123,7 +144,7 @@ Template.kirjaus.helpers({
 
 Template.KirjausSumma.onRendered(
   function(){
-    //Update sum of products 
+    //Update sum of products
     document.getElementById('sum').innerHTML = kerroSumma(Kirjaukset).toFixed(2) + " €";
     $("#nm").focus();
   }
@@ -168,8 +189,8 @@ function kerroHenkiloSumma(user){
     Arkisto.find({Owner: user}).map(function(doc) {
       total += Number(doc.price);
     });
-      
-    return total; 
+
+    return total;
 }
 
 //Helper function: returns sum of all prices in staging area
@@ -179,6 +200,6 @@ function kerroSumma(taulu) {
     taulu.find().map(function(doc) {
       total += Number(doc.price);
     });
-      
-    return total; 
+
+    return total;
 }
